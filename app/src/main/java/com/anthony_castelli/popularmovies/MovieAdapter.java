@@ -43,7 +43,8 @@ public class MovieAdapter extends BaseAdapter {
         }
 
         // Add the movie image to the current ImageView
-        Movie movie = mMovies[position];
+        Movie movie;
+        movie = mMovies[position];
         String requestedSize = "w185";
         String URL = "http://image.tmdb.org/t/p/" + requestedSize + movie.getPoster();
         Picasso.with(mContext).load(URL).into(imageView);
