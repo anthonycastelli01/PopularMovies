@@ -5,7 +5,7 @@
     <item android:id="@+id/sort_by_popularity"
           android:title="@string/popularity"
           app:showAsAction="never"/>
-    <item android:id="@+id/sort_by_votes"
-          android:title="@string/votes"
+    <item android:id="@+id/sort_by_top_rated"
+          android:title="@string/top_rated"
           app:showAsAction="never"/>
 </menu>

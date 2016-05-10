@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_popularity:
-                getSortedMovies("popularity.desc");
+                getSortedMovies("popularity");
                 return true;
-            case R.id.sort_by_votes:
-                getSortedMovies("vote_count.desc");
+            case R.id.sort_by_top_rated:
+                getSortedMovies("top_rated");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String sortParameter = "popularity.desc";
+        String sortParameter = "popularity";
         getSortedMovies(sortParameter);
 
         mGridView = (GridView) findViewById(R.id.posterGridView);
@@ -75,7 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSortedMovies(String sortParameter) {
         String apiKey = getResources().getString(R.string.TMDB_request_key);
-        String moviesURL = "http://api.themoviedb.org/3/discover/movie?sort_by=" + sortParameter + "&api_key=" + apiKey;
+        String moviesURL;
+
+        if (sortParameter == "top_rated") {
+            moviesURL = "http://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey;
+        } else {
+            moviesURL = "http://api.themoviedb.org/3/movie/popular?api_key=" + apiKey;
+        }
 
         if (isNetworkAvailable()) {
             OkHttpClient client = new OkHttpClient();
@@ -154,6 +160,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void alertUserAboutError() {
-        Toast.makeText(this, "Unable to get movie data right now.", Toast.LENGTH_LONG).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, "Unable to get movie data right now.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
