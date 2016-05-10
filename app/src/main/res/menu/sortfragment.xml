@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/sort_by_label"
+        android:title="@string/sort_by_label">
+        <menu>
+            <item android:id="@+id/sort_by_popularity"
+                android:title="@string/popularity"
+                app:showAsAction="never"/>
+            <item android:id="@+id/sort_by_votes"
+                  android:title="@string/votes"
+                  app:showAsAction="never"/>
+        </menu>
+    </item>
+</menu>
