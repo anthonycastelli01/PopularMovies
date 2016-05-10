@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getMovies();
+        // TODO : Change this parameter based on settings
+//        String sortParameter = "popularity.desc";
+        String sortParameter = "vote_count.desc";
+        getSortedMovies(sortParameter);
 
         mGridView = (GridView) findViewById(R.id.posterGridView);
 
@@ -48,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getMovies() {
+    private void getSortedMovies(String sortParameter) {
         String apiKey = getResources().getString(R.string.TMDB_request_key);
-        String popularMoviesURL = "http://api.themoviedb.org/3/movie/popular?api_key=" + apiKey;
+        String moviesURL = "http://api.themoviedb.org/3/discover/movie?sort_by=" + sortParameter + "&api_key=" + apiKey;
 
         if (isNetworkAvailable()) {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(popularMoviesURL)
+                    .url(moviesURL)
                     .build();
 
             Call call = client.newCall(request);
@@ -101,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < movies.length; i++) {
             JSONObject jsonMovie = movieArray.getJSONObject(i);
-
-            Log.i(TAG, jsonMovie.getString("poster_path"));
 
             Movie movie = new Movie();
 
