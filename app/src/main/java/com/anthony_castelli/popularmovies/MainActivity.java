@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -40,13 +41,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_by_popularity:
+                getSortedMovies("popularity.desc");
+                return true;
+            case R.id.sort_by_votes:
+                getSortedMovies("vote_count.desc");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO : Change this parameter based on settings
-//        String sortParameter = "popularity.desc";
-        String sortParameter = "vote_count.desc";
+        String sortParameter = "popularity.desc";
         getSortedMovies(sortParameter);
 
         mGridView = (GridView) findViewById(R.id.posterGridView);
